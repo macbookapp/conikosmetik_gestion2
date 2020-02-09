@@ -1,0 +1,19 @@
+.rojo{
+    color: red;
+}
+.azul{
+    color:blue;
+}
+.verde{
+    color:green;
+}
+.mijumbo{
+    background-color: whitesmoke;
+}
+.centrar{
+    margin: 0 auto;
+}
+.t50{
+    border: 2px red;
+    width: 50%;
+}

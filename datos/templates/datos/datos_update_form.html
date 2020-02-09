@@ -1,0 +1,27 @@
+{% extends 'datos/base.html' %}}
+
+{% block titulo %}
+    Actualizar Datos
+{% endblock %}}
+
+{% block contenido %}
+<div class="row">
+    <div class="col-md-9 mx-auto">
+        <form method="post">
+            {% csrf_token %}
+
+                <div class="form-group">
+                    {{ form.as_p }}
+                </div>
+
+
+
+            <hr>
+            <input type="submit" value="Actualizar" class='btn btn-outline-primary'>
+
+        </form>
+
+    </div>
+
+</div>
+{% endblock %}

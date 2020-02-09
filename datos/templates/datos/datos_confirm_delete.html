@@ -1,0 +1,45 @@
+{% extends 'datos/base.html' %}
+
+{% block titulo %}
+    Inicio
+{% endblock %}
+
+{% block contenido %}
+    <div class="row border mijumbo shadow">
+
+
+            <div class="col-lg-9 border-danger p-5 centrar">
+
+                <div class="centrar t50">
+                    <h3>Seguro que quieres borrar ?</h3>
+                    <br>
+                    <p> <strong>Fecha:</strong>  {{ object.fecha }}</p>
+                    <p> <strong>Concepto:</strong> {{ object.concepto }}</p>
+                    {% if object.ingreso != 0 %}
+                        <p> <strong>Ingreso:</strong> {{ object.ingreso }}€</p>
+                    {% elif object.gasto != 0 %}
+                        <p> <strong>Gasto:</strong> {{ object.gasto }}€</p>
+                    {% endif %}
+
+                    <p> <strong>Total:</strong> {{ object.total }}</p>
+
+                    <hr>
+                    <form method="post">
+                        {% csrf_token %}
+                        <a class="btn btn-secondary shadow" href="{% url 'datos_app:listado_completo' %}">Volver</a>
+                        <input class="btn btn-danger shadow"  type="submit" value="Confirmar">
+                    </form>
+                </div>
+
+
+            </div>
+
+
+
+    </div>
+
+
+
+{% endblock %}
+
+

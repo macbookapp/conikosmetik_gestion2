@@ -1,0 +1,67 @@
+{% extends 'datos/base.html' %}
+
+{% block titulo %}
+    Listado completo
+{% endblock %}
+
+{% block contenido %}
+    <h1 class="text-center">Listado completo</h1>
+    <a class = 'btn btn-outline-dark'  href="{% url 'datos_app:imprimir_todo'%}">Imprimir</a>
+    <hr>
+    <div class="jumbotron mijumbo border-primary  shadow">
+
+        {% if datos_list.count == 0 %}
+            <h2 class="text-center text-secondary">De momento no tienes datos en tu Base de Datos</h2>
+        {% else %}
+            <table class="table table-hover table-bordered">
+              <thead>
+                <tr>
+                  <th scope="col" class="text-center ">Fecha</th>
+                  <th scope="col" class="text-center ">Concepto</th>
+                  <th scope="col" class="text-center ">Ingreso</th>
+                  <th scope="col" class="text-center ">Gasto</th>
+                  <th scope="col" class="text-center ">Total</th>
+                  <th scope="col" class="text-center" >Acciones</th>
+                </tr>
+              </thead>
+
+
+
+              {% for dato in datos_list|dictsortreversed:'fecha' %}
+
+
+              <tbody>
+
+                <tr>
+                  <th scope="row">{{ dato.fecha }}</th>
+                  <td >{{ dato.concepto }}</td>
+                  <td class="text-right azul">{{ dato.ingreso }} €</td>
+                  <td class="text-right rojo">- {{ dato.gasto }} €</td>
+                  <td class="text-right verde">{{ dato.total }} €</td>
+                  <td class="text-center ">
+                      <a class='btn btn-sm btn-outline-primary shadow' href="{% url 'datos_app:actualizar_datos' dato.id %}">Editar</a>
+                      <a class='btn btn-sm btn-outline-danger shadow' href="{% url 'datos_app:borrar_dato' dato.id %}">Borrar</a>
+                      <a class='btn btn-sm btn-outline-secondary shadow' href="{% url 'datos_app:imprimir_uno' dato.id %}">Imprimir</a>
+                      <span class="fa"></span>
+                  </td>
+                </tr>
+
+              </tbody>
+             {% endfor %}
+            </table>
+
+        {% endif %}
+
+        <div class="btn-group">
+            {% if page_obj.has_previous %}
+                <a class="btn btn-outline-secondary" href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+            {% endif %}
+            {% if page_obj.has_next%}
+                 <a class="btn btn-outline-secondary" href="?page={{ page_obj.next_page_number }}">Siguiente</a>
+            {% endif %}
+
+        </div>
+
+
+    </div>
+{% endblock %}
