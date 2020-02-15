@@ -6,7 +6,7 @@
 
 {% block contenido %}
     <h1 class="text-center">Listado completo</h1>
-    <a class = 'btn btn-outline-dark'  href="{% url 'datos_app:imprimir_todo'%}">Imprimir</a>
+    <a class = 'btn btn-outline-dark'  href="{% url 'datos_app:imprimir_todo'%}"><i class="fa fa-print"></i>&nbsp;Imprimir</a>
     <hr>
     <div class="jumbotron mijumbo border-primary  shadow">
 
@@ -39,9 +39,10 @@
                   <td class="text-right rojo">- {{ dato.gasto }} €</td>
                   <td class="text-right verde">{{ dato.total }} €</td>
                   <td class="text-center ">
-                      <a class='btn btn-sm btn-outline-primary shadow' href="{% url 'datos_app:actualizar_datos' dato.id %}">Editar</a>
-                      <a class='btn btn-sm btn-outline-danger shadow' href="{% url 'datos_app:borrar_dato' dato.id %}">Borrar</a>
-                      <a class='btn btn-sm btn-outline-secondary shadow' href="{% url 'datos_app:imprimir_uno' dato.id %}">Imprimir</a>
+
+                      <a class='btn btn-outline-primary btn-sm shadow' href="{% url 'datos_app:actualizar_datos' dato.id %}"><i class="fa fa-edit"></i>&nbsp;Editar</a>
+                      <a class='btn btn-sm btn-outline-danger shadow' href="{% url 'datos_app:borrar_dato' dato.id %}"><i class="fa fa-trash"></i>&nbsp;Borrar</a>
+                      <a class='btn btn-sm btn-outline-secondary shadow' href="{% url 'datos_app:imprimir_uno' dato.id %}"><i class="fa fa-print"></i>&nbsp;Imprimir</a>
                       <span class="fa"></span>
                   </td>
                 </tr>
@@ -52,18 +53,47 @@
 
         {% endif %}
 
-        <div class="btn-group">
-            {% if is_paginated%}
-                 {% if page_obj.has_previous %}
-                <a class="btn btn-outline-secondary" href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+        <div class="row centrar">
+            <div class="col-lg-5 centrar">
+                 {% if is_paginated%}
+                <ul class = 'pagination'>
+                {%  if page_obj.has_previous %}
+                    <li class="page-item p-1">
+                        <a class = 'page-link text-muted' href="?page={{ page_obj.previous_page_number }}"><i class="fa fa-arrow-left"></i></a>
+                    </li>
+                {% else %}
+                    <li class="page-item p-1 disabled">
+                        <a class = 'page-link text-muted' href="#"><i class="fa fa-arrow-left"></i></a>
+                    </li>
+                {% endif %}
+                {% for pagina in paginator.page_range %}
+                    {% if page_obj.number == pagina %}
+                        <li class="p-1 page-item active">
+                            <a class= 'page-link' href="?page={{ pagina }}">{{ pagina }}</a>
+                        </li>
+                    {% else %}
+                        <li class="p-1 page-item">
+                            <a class= 'page-link text-muted' href="?page={{ pagina }}">{{ pagina }}</a>
+                        </li>
+                    {% endif %}
+
+
+                {% endfor %}
+
+                {%  if page_obj.has_next %}
+                    <li class="page-item p-1">
+                        <a class = 'page-link text-muted' href="?page={{ page_obj.next_page_number }}"><i class="fa fa-arrow-right"></i></a>
+                    </li>
+                {% else %}
+                     <li class="page-item p-1 disabled">
+                        <a class = 'page-link text-muted' href="#"><i class="fa fa-arrow-right"></i></a>
+                    </li>
                 {% endif %}
 
-                <span>Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.</span>
-
-                {% if page_obj.has_next%}
-                     <a class="btn btn-outline-secondary" href="?page={{ page_obj.next_page_number }}">Siguiente</a>
-                {% endif %}
+                </ul>
             {% endif %}
+            </div>
+
 
         </div>
 
